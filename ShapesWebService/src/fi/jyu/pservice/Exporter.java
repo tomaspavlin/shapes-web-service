@@ -1,5 +1,8 @@
 package fi.jyu.pservice;
+
 import javax.xml.ws.Endpoint;
+
+import fi.jyu.pservice.ComputeAreaImpl;
 
 public class Exporter {
 
