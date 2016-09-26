@@ -3,33 +3,45 @@
 <body>
 
 
+<script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+
 <script type="text/javascript">
-$("#ajaxform").submit(function(e) {
 
-    var url = "/ComputeSquareArea"; // the script where you handle the form input.
+$(document).ready(function(){
+  $("#squareForm").submit(function(e) {
+      var url = "/ComputeSquareArea"; // the script where you handle the form input.
+      console.log("submited");
 
-    $.ajax({
-           type: "GET",
-           url: url,
-           data: $("#ajaxform").serialize(), // serializes the form's elements.
-           success: function(data)
-           {
-               alert(data); // show response from the php script.
-           }
-         });
+      $.ajax({
+             type: "GET",
+             url: url,
+             data: $("#squareForm").serialize(), // serializes the form's elements.
+             success: function(data)
+             {
+                 //alert(data); // show response from the php script.
+                 $("squareResult").text(data);
+                 console.log("evaluated");
+             }
+           });
 
-    e.preventDefault(); // avoid to execute the actual submit of the form.
+      e.preventDefault(); // avoid to execute the actual submit of the form.
+  });
+
+
 });
+
+
 </script>
  
 <!-- /ComputeSquareArea?side=5.0&sideUnit=Meters&resultUnit=squaremeter -->
 
-<form id = "ajaxform" action="/ComputeSquareArea" method="get">
+<form id="squareForm" action="#" method="get">
 <img src="square.jpg" alt="Square" style="width:150px;height:128px;"> <br>
 Enter Side (eg. 5.0): <input type="text" name="side" size="20" /><br>
 Enter SideUnit (eg. Meters): <input type="text" name="sideUnit" size="20" /><br>
 Enter ResultUnit (eg. squaremeter): <input type="text" name="resultUnit" size="20" /><br>
-<input id = "ajaxSubmit"type="submit" value="Submit" /></form>
+<input type="submit" value="Submit" /></form>
+<div id="squareResult"></div>
 
 <!-- // Example: "/ComputeCircleArea?radius=5.0&radiusUnit=Meters&resultUnit=squaremeter"
  -->
