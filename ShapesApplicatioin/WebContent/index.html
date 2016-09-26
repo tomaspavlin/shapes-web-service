@@ -19,8 +19,9 @@ $(document).ready(function(){
              success: function(data)
              {
                  //alert(data); // show response from the php script.
-                 $("squareResult").text(data);
-                 console.log("evaluated");
+                 output = "The area is = " + data;
+                 console.log(output);
+                 $("#squareResult").text(output)
              }
            });
 
@@ -30,23 +31,75 @@ $(document).ready(function(){
 
 });
 
+$(document).ready(function(){
+	  $("#circleForm").submit(function(e) {
+	      var url = "/ComputeCircleArea"; // the script where you handle the form input.
+	      console.log("submited");
+
+	      $.ajax({
+	             type: "GET",
+	             url: url,
+	             data: $("#circleForm").serialize(), // serializes the form's elements.
+	             success: function(data)
+	             {
+	                 //alert(data); // show response from the php script.
+	                 output = "The area is = " + data;
+	                 console.log(output);
+	                 $("#circleResult").text(output)
+	             }
+	           });
+
+	      e.preventDefault(); // avoid to execute the actual submit of the form.
+	  });
+
+
+	});
+	
+$(document).ready(function(){
+	  $("#triangleForm").submit(function(e) {
+	      var url = "/ComputeTriangleAreaByBaseAndHeight"; // the script where you handle the form input.
+	      console.log("submited");
+
+	      $.ajax({
+	             type: "GET",
+	             url: url,
+	             data: $("#triangleForm").serialize(), // serializes the form's elements.
+	             success: function(data)
+	             {
+	                 //alert(data); // show response from the php script.
+	                 output = "The area is = " + data;
+	                 console.log(output);
+	                 $("#triangleResult").text(output)
+	             }
+	           });
+
+	      e.preventDefault(); // avoid to execute the actual submit of the form.
+	  });
+
+
+	});
+
 
 </script>
  
 <!-- /ComputeSquareArea?side=5.0&sideUnit=Meters&resultUnit=squaremeter -->
 
 <form id="squareForm" action="#" method="get">
-<img src="square.jpg" alt="Square" style="width:150px;height:128px;"> <br>
+<img src="square.jpg" alt="Square" style="width:150px;height:128px;"> 
+ <div id="squareResult"></div>
+ <br>
 Enter Side (eg. 5.0): <input type="text" name="side" size="20" /><br>
 Enter SideUnit (eg. Meters): <input type="text" name="sideUnit" size="20" /><br>
 Enter ResultUnit (eg. squaremeter): <input type="text" name="resultUnit" size="20" /><br>
 <input type="submit" value="Submit" /></form>
-<div id="squareResult"></div>
 
 <!-- // Example: "/ComputeCircleArea?radius=5.0&radiusUnit=Meters&resultUnit=squaremeter"
  -->
-<form id = "ajaxSubmit" action="/ComputeCircleArea" method="get">
-<img src="circle.jpg" alt="Circle" style="width:150px;height:128px;"> <br>
+<form id = "circleForm" action="#" method="get">
+<img src="circle.jpg" alt="Circle" style="width:150px;height:128px;">
+ <div id="circleResult"></div>
+
+ <br>
 Enter Radius (eg 5.0): <input type="text" name="radius" size="20" /><br>
 Enter RadiusUnit (eg Meters): <input type="text" name="radiusUnit" size="20" /><br>
 Enter ResultUnit of Square (eg squaremeter): <input type="text" name="resultUnit" size="20" /><br>
@@ -54,8 +107,10 @@ Enter ResultUnit of Square (eg squaremeter): <input type="text" name="resultUnit
 
 <!-- // Example: "/ComputeTriangleAreaByBaseAndHeight?base=5.0&height=2.0&baseUnit=Meters&heightUnit=Meters&resultUnit=squaremeter"
  -->
-<form id = "ajaxSubmit" action="/ComputeTriangleAreaByBaseAndHeight" method="get">
-<img src="triangle.jpg" alt="Triangle" style="width:150px;height:128px;"> <br>
+<form id = "triangleForm" action="#" method="get">
+<img src="triangle.jpg" alt="Triangle" style="width:150px;height:128px;"> 
+<div id="triangleResult"></div>
+<br>
 Enter Base (eg 5.0): <input type="text" name="base" size="20" /><br>
 Enter Height (eg squaremeter): <input type="text" name="height" size="20" /><br>
 Enter BaseUnit (eg Meters): <input type="text" name="baseUnit" size="20" /><br>
