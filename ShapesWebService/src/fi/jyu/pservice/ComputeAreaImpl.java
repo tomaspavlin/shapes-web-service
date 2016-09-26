@@ -17,7 +17,7 @@ public class ComputeAreaImpl implements ComputeArea {
 	@WebMethod
 	public String ComputeSquareArea(Double side) {
 		// TODO Auto-generated method stub
-		return Utility.converToXml((side * 4));
+		return Utility.converToXml((side * side));
 	}
 
 	@Override
