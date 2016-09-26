@@ -36,13 +36,24 @@ public class ComputeSquareArea extends HttpServlet {
         response.setContentType("text/plain");
         response.setCharacterEncoding("UTF-8");
         
-        double side = this.utility.getArgInMeters(request, "side");
-        double result = this.utility.parseResults(
-    		request.getParameter("resultUnit"),
-    		this.areaService.computeSquareArea(side));
+        Double side = null;
+        try {
+        	side = this.utility.getArgInMeters(request, "side");
+        } catch (Exception e) {
+        	response.setStatus(400);
+        }
         
         PrintWriter out  = response.getWriter();
-        out.print(result);
+        
+        if (side != null) {
+        	Double result = this.utility.parseResults(
+        		request.getParameter("resultUnit"),
+        		this.areaService.computeSquareArea(side));
+        	out.print(result);
+        } else {
+        	out.print("Wrong request parameters. Make sure that you use correct unit.");
+        }
+
         out.flush();
 	}
 

@@ -36,13 +36,24 @@ public class ComputeCircleArea extends HttpServlet {
 		response.setContentType("text/plain");
         response.setCharacterEncoding("UTF-8");
         
-        double radius = this.utility.getArgInMeters(request, "radius");
-        double result = this.utility.parseResults(
-    		request.getParameter("resultUnit"),
-    		this.areaService.computeCircleArea(radius));
+        Double radius = null;
+        try {
+        	radius = this.utility.getArgInMeters(request, "radius");
+        } catch (Exception e) {
+        	response.setStatus(400);
+        }
         
         PrintWriter out  = response.getWriter();
-        out.print(result);
+        
+        if (radius != null) {
+        	Double result = this.utility.parseResults(
+        		request.getParameter("resultUnit"),
+        		this.areaService.computeCircleArea(radius));
+        	out.print(result);
+        } else {
+        	out.print("Wrong request parameters. Make sure that you use correct unit.");
+        }
+
         out.flush();
 	}
 

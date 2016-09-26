@@ -33,14 +33,26 @@ public class ComputeTriangleAreaByBaseAndHeight extends HttpServlet {
         response.setContentType("text/plain");
         response.setCharacterEncoding("UTF-8");
         
-        double base = this.utility.getArgInMeters(request, "base");
-        double height = this.utility.getArgInMeters(request, "height");
-        double result = this.utility.parseResults(
-    		request.getParameter("resultUnit"),
-    		this.areaService.computeTriangleAreaByBaseAndHeight(base, height));
+        Double base = null;
+        Double height = null;
+        try {
+        	base = this.utility.getArgInMeters(request, "base");
+        	height = this.utility.getArgInMeters(request, "height");
+        } catch (Exception e) {
+        	response.setStatus(400);
+        }
         
         PrintWriter out  = response.getWriter();
-        out.print(result);
+        
+        if (base != null && height != null) {
+        	Double result = this.utility.parseResults(
+        		request.getParameter("resultUnit"),
+        		this.areaService.computeTriangleAreaByBaseAndHeight(base, height));
+        	out.print(result);
+        } else {
+        	out.print("Wrong request parameters. Make sure that you use correct unit.");
+        }
+
         out.flush();
 	}
 
